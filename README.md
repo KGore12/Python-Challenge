@@ -1,2 +1,2 @@
-# Python-Challenge
+# python-challenge
 Py Me up, Charlie
