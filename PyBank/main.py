@@ -2,16 +2,14 @@ import os
 import csv
 
 
-# All variables and totals
+# All the variables and totals for assignment
 total_months = 0
-net_PandL = 0
-month_total = []
-avg_change = []
-
-greatest_increase = 0
-greatest_decrease = 0
-greatest_In_month = 0
-greatest_De_month = 0
+net__total_profits_losses = 0
+average_changes_profits_losses = []
+greatest_increase_profits = 0
+greatest_decrease_losses = 0
+greatest_increase_month = 0
+greatest_decrease_month = 0
 
 
 # Get Budget.csv from the Pybank Resources folder 
@@ -20,60 +18,62 @@ csvpath = os.path.join('..', 'PyBank', 'Resources', 'budget_data.csv')
 # Open PyBank Budget.csv file 
 with open(csvpath, 'r') as csvfile:
     
-    # Use delimiter to separate data ","
+    # Use delimiter to separate data by comma ","
     csvreader = csv.reader(csvfile, delimiter=',')
     
-    # Instruct to read head row
+    # Instructions to read head row
     csv_header = next(csvreader)
     row = next(csvreader)
     
-    # Collect data for the PandL calculations & also set any variables for rows -total Number Of Months, Net Amount Of 
+    # Collect data for the Profits and Losses calculations & 
+        # also set any variables for rows -total Number Of Months, Net Amount Of 
+
     previous_row = int(row[1])
-    total_months += 1
-    net_PandL += int(row[1])
-    greatest_increase = int(row[1])
-    greatest_In_month = row[0]
+
     
     # for every row of data after header
     for row in csvreader:
-        
+
         # Use calculation for total # of months in all datasets 
         total_months += 1
         
         # Use calculation for net_amount of PandL for entire period
-        net_PandL += int(row[1])
+        net__total_profits_losses += int(row[1])
 
         # Show calculations changes from the current month to previous months
+                #check if error is thrown for total_months.append  it was month_total & you removed that variable above
         revenue_change = int(row[1]) - previous_row
-        avg_change.append(revenue_change)
+        average_changes_profits_losses.append(revenue_change)
         previous_row = int(row[1])
-        month_total.append(row[0])
+
         
-        # Calculate your greatest increase
-        if int(row[1]) > greatest_increase:
+        # Calculate your greatest increase for the profits and which month
+        if int(row[1]) > greatest_increase_profits:
             greatest_increase = int(row[1])
-            greatest_Inmonth = row[0]
+            greatest_increase_month = row[0]
             
         # Calculate your greatest decrease
-        if int(row[1]) < greatest_decrease:
-            greatest_decrease = int(row[1])
-            greatest_Demonth = row[0]  
+        if int(row[1]) < greatest_decrease_losses:
+            greatest_decrease_losses = int(row[1])
+            greatest_decrease_month = row[0]  
         
     # What is the average change and what is the date?
-    avg_change = sum(avg_change)/ len(avg_change)
+    average_changes = sum(average_changes_profits_losses)/ len(average_changes_profits_losses)
     
-    highest = max(avg_change)
-    lowest = min(avg_change)
+    highest = max(average_changes_profits_losses)
+    lowest = min(average_changes_profits_losses)
+
 
 
 #Print breakdown Analysis
 print(f"Financial Analysis")
 print(f"----_-------------")
 print(f"Total Months: {total_months}")
-print(f"Total: ${net_amount}")
-print(f"Average Change: ${avg_change:.2f}")
-print(f"Greatest Increase in Profits:, {greatest_Inmonth}, (${highest})")
-print(f"Greatest Decrease in Profits:, {greatest_Demonth}, (${lowest})")
+print(f"Total: ${net__total_profits_losses}")
+print(f"Average Change: ${average_changes:.2f}")
+print(f"Greatest Increase in Profits:, {greatest_increase_month}, (${highest})")
+print(f"Greatest Decrease in Profits:, {greatest_decrease_month}, (${lowest})")
+
 
 #File To Write To - specification
 output_file = os.path.join('..', 'PyBank', 'Resources', 'budget_data_outcome.text')
@@ -85,8 +85,8 @@ with open(output_file, 'w') as txtfile:
     txtfile.write(f"Financial Analysis\n")
     txtfile.write(f"---------------------------\n")
     txtfile.write(f"Total Months: {total_months}\n")
-    txtfile.write(f"Total: ${net_amount}\n")
-    txtfile.write(f"Average Change: ${average_change}\n")
+    txtfile.write(f"Total: ${net__total_profits_losses}\n")
+    txtfile.write(f"Average Change: ${average_changes}\n")
     txtfile.write(f"Greatest Increase in Profits:, {greatest_increase_month}, (${highest})\n")
     txtfile.write(f"Greatest Decrease in Profits:, {greatest_decrease_month}, (${lowest})\n")
 

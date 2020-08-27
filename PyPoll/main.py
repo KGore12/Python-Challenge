@@ -2,30 +2,30 @@
 import os
 import csv
 
-#Variables and values
-total_votes = 0
-khan_votes = 0
+#Declare your variables and values
+total_votes_cast = 0
+khan_votes = 0 
 correy_votes = 0
 li_votes = 0
 otooley_votes = 0
 
-#Path For File
+# Specify your path for the csv file from Resources file
 csvpath = os.path.join('..', 'PyPoll', 'Resources', 'election_data.csv')
 
-#csvFile - command to open
+# Open your CSV file
 with open(csvpath, 'r') as csvfile:
 
-    #csvReader Specifies Delimiter & Variable That Holds Contents
+    # Delimit the file using the comman & Variable That Holds Contents
     csvreader = csv.reader(csvfile, delimiter=',')
     
-    #The Header Row First - Read
+    # Read your header row first
     csv_header = next(csvfile)
 
-    #Read Each Row Of Data After The Header
+    # read each row of data that is after the header
     for row in csvreader:
         
-        #Total Number Of Votes Cast - calculation
-        total_votes += 1
+        # Calculate the total number of votes cast. 
+        total_votes_cast += 1
         
         #Total Number Of Votes Each Candidate Won - calculation
         if (row[2] == "Khan"):
@@ -39,10 +39,10 @@ with open(csvpath, 'r') as csvfile:
             
 
     #Percentage Of Votes Each Candidate Won - calculation
-    kahn_percent = khan_votes / total_votes
-    correy_percent = correy_votes / total_votes
-    li_percent = li_votes / total_votes
-    otooley_percent = otooley_votes / total_votes
+    kahn_percent = khan_votes / total_votes_cast
+    correy_percent = correy_votes / total_votes_cast
+    li_percent = li_votes / total_votes_cast
+    otooley_percent = otooley_votes / total_votes_cast
     
     #Winner Of The Election Based On Popular Vote - calculation
     winner = max(khan_votes, correy_votes, li_votes, otooley_votes)
@@ -59,7 +59,7 @@ with open(csvpath, 'r') as csvfile:
 #Print breakdown Analysis
 print(f"Election Results")
 print(f"---------------------------")
-print(f"Total Votes: {total_votes}")
+print(f"Total Votes: {total_votes_cast}")
 print(f"---------------------------")
 print(f"Kahn: {kahn_percent:.3%}({khan_votes})")
 print(f"Correy: {correy_percent:.3%}({correy_votes})")
@@ -80,7 +80,7 @@ with open(output_file, 'w',) as txtfile:
 #New Data
     txtfile.write(f"Election Results\n")
     txtfile.write(f"---------------------------\n")
-    txtfile.write(f"Total Votes: {total_votes}\n")
+    txtfile.write(f"Total Votes: {total_votes_cast}\n")
     txtfile.write(f"---------------------------\n")
     txtfile.write(f"Kahn: {kahn_percent:.3%}({khan_votes})\n")
     txtfile.write(f"Correy: {correy_percent:.3%}({correy_votes})\n")
